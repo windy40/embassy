@@ -4,7 +4,7 @@
   "rust-analyzer.checkOnSave.noDefaultFeatures": true,
   "rust-analyzer.cargo.noDefaultFeatures": true,
   "rust-analyzer.procMacro.enable": true,
-  "rust-analyzer.cargo.target": "thumbv7em-none-eabi",
+  "rust-analyzer.cargo.target": "thumbv7em-none-eabi", //"thumbv7em-none-eabihf",
   "rust-analyzer.cargo.features": [
     // These are needed to prevent embassy-net from failing to build
     //"embassy-net/medium-ethernet",
@@ -34,7 +34,7 @@
     // "examples/stm32l4/Cargo.toml",
     // "examples/stm32u5/Cargo.toml",
     // "examples/stm32wb55/Cargo.toml",
-    // "examples/stm32wl55/Cargo.toml",
+    //"examples/stm32wl55/Cargo.toml",
     // "examples/wasm/Cargo.toml",
   ],
   "rust-analyzer.imports.granularity.enforce": true,

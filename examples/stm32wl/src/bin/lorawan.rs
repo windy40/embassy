@@ -66,7 +66,8 @@ async fn main(_spawner: Spawner) {
     let mut region: region::Configuration = region::EU868::default().into();
 
     // NOTE: This is specific for TTN, as they have a special RX1 delay
-    region.set_receive_delay1(5000);
+    //region.set_receive_delay1(5000);
+    region.set_receive_delay1(1000);
 
     let mut device: Device<_, Crypto, _, _> = Device::new(region, radio, LoraTimer::new(), Rng::new(p.RNG));
 
@@ -84,9 +85,11 @@ async fn main(_spawner: Spawner) {
     // TODO: Adjust the EUI and Keys according to your network credentials
     device
         .join(&JoinMode::OTAA {
-            deveui: [0, 0, 0, 0, 0, 0, 0, 0],
+ //           deveui: [0x00,0x80,0xe1,0x15,0x00,0x0a,0xe3,0x2e],
+            deveui: [0x2e,0xe3,0x0a,0x00,0x15,0xe1,0x80,0x00],
             appeui: [0, 0, 0, 0, 0, 0, 0, 0],
-            appkey: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            appkey: [0x2c,0xc1,0x72,0x96,0x9d,0x5c,0xc2,0x63,0x82,0xe0,0xad,0x05,0x45,0x68,0xce,0x3e],
+ //           appkey: [0x3e,0xce,0x68,0x45,0x05,0xad,0xe0,0x82,0x63,0xc2,0x5c,0x9d,0x96,0x72,0xc1,0x2c],
         })
         .await
         .ok()
@@ -98,6 +101,7 @@ async fn main(_spawner: Spawner) {
     let len = device.send_recv(b"PING", &mut rx[..], 1, true).await.ok().unwrap();
     if len > 0 {
         defmt::info!("Message sent, received downlink: {:?}", &rx[..len]);
+        defmt::info!("  as str: {:?}", core::str::from_utf8(&rx[..len]).unwrap());
     } else {
         defmt::info!("Message sent!");
     }
