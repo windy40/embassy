@@ -16,7 +16,7 @@ use {defmt_rtt as _, panic_probe as _};
 
 use bme280;
 use embassy_time::Delay;
-use embedded_hal::blocking::delay::DelayUs;
+use embedded_hal::delay::DelayUs;
 
 
 #[embassy_executor::main]
@@ -48,7 +48,7 @@ async fn main(_spawner: Spawner) -> ! {
     println!("Pressure = {} pascals", measurements.pressure);
 
     loop{
-        Delay.delay_us(1000000u32);
+        Delay.delay_us(1000000u32).unwrap();
         let measurements = bme280.measure(&mut Delay).unwrap();
 
         println!("Relative Humidity = {}%", measurements.humidity);
